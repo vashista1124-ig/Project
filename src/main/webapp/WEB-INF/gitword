@@ -1,0 +1,98 @@
+Sure! Here is the simplest possible way to run WordPress + MySQL using Docker Compose — very easy, just copy–paste and run.
+
+This is the cleanest, beginner-friendly, and 100% working method.
+
+⭐ STEP 1 — Create a folder
+
+Open PowerShell:
+
+mkdir wordpress-db
+cd wordpress-db
+
+⭐ STEP 2 — Create a docker-compose.yml file
+
+Inside the folder create a file named:
+
+docker-compose.yml
+
+
+Paste this simple WordPress + MySQL setup:
+
+services:
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: wordpress
+    volumes:
+      - db_data:/var/lib/mysql
+
+  wordpress:
+    image: wordpress:latest
+    ports:
+      - "8080:80"
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: root
+      WORDPRESS_DB_NAME: wordpress
+    depends_on:
+      - db
+
+volumes:
+  db_data:
+
+✔ What this does:
+
+Creates a MySQL DB container
+
+Creates a WordPress container
+
+Connects them together
+
+Saves database permanently
+
+Exposes WordPress at http://localhost:8080
+
+⭐ STEP 3 — Start both containers
+
+Run this:
+
+docker compose up -d
+
+
+(or docker-compose up -d in older Docker)
+
+This will:
+
+Download MySQL
+
+Download WordPress
+
+Start both
+
+Link them automatically
+
+⭐ STEP 4 — Open WordPress
+
+Open:
+
+http://localhost:8080
+
+
+You will see the WordPress setup page.
+Choose language → set site name → create admin user.
+
+That’s it.
+
+⭐ STEP 5 — Stop the containers (when needed)
+docker compose down
+
+
+If you also want to delete database data:
+
+docker compose down -v
+
+⭐ DONE! 🎉
+
+This is the simples

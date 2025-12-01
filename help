@@ -1,0 +1,122 @@
+PS C:\Users\adlac\desktop> cd
+PS C:\Users\adlac\desktop> cd ..
+PS C:\Users\adlac> cd onedrive
+PS C:\Users\adlac\onedrive> cd desktop
+PS C:\Users\adlac\onedrive\desktop> cd deepak
+PS C:\Users\adlac\onedrive\desktop\deepak> docker pull redis
+Using default tag: latest
+latest: Pulling from library/redis
+a3f725691cac: Already exists
+cf596724f63e: Already exists
+d7e6e9e45ecf: Already exists
+349073970fc7: Download complete
+4f4fb700ef54: Already exists
+d107e437f729: Download complete
+bd022da7d981: Already exists
+Digest: sha256:acb90ced0bd769b7c04cb4c32c4494ba7b3e0ee068bdbfff0eeb0d31c2a21078
+Status: Downloaded newer image for redis:latest
+docker.io/library/redis:latest
+PS C:\Users\adlac\onedrive\desktop\deepak> docker run --name my-redis -d redis
+db0058d27caf11a49e87c2635a89947952dcdec1b029764e6a84e6ca5da18b13
+PS C:\Users\adlac\onedrive\desktop\deepak> docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED              STATUS              PORTS      NAMES
+db0058d27caf   redis     "docker-entrypoint.s…"   About a minute ago   Up About a minute   6379/tcp   my-redis
+PS C:\Users\adlac\onedrive\desktop\deepak> docker exec -it my-redis redis-cli
+127.0.0.1:6379> SET name "Alice"
+OK
+127.0.0.1:6379> GET name
+"Alice"
+127.0.0.1:6379> exit
+PS C:\Users\adlac\onedrive\desktop\deepak> docker stop my-redis
+my-redis
+PS C:\Users\adlac\onedrive\desktop\deepak> docker start my-redis
+my-redis
+PS C:\Users\adlac\onedrive\desktop\deepak> docker rm my-redis
+Error response from daemon: cannot remove container "/my-redis": container is running: stop the container before removing or force remove
+PS C:\Users\adlac\onedrive\desktop\deepak> docker stop my-redis
+my-redis
+PS C:\Users\adlac\onedrive\desktop\deepak> docker rm my-redis
+my-redis
+PS C:\Users\adlac\onedrive\desktop\deepak> docker rmi redis
+Untagged: redis:latest
+Deleted: sha256:acb90ced0bd769b7c04cb4c32c4494ba7b3e0ee068bdbfff0eeb0d31c2a21078
+PS C:\Users\adlac\onedrive\desktop\deepak> docker build -t redisnew .
+[+] Building 6.7s (6/6) FINISHED                                                                   docker:desktop-linux
+ => [internal] load build definition from Dockerfile                                                               0.1s
+ => => transferring dockerfile: 78B                                                                                0.0s
+ => [internal] load metadata for docker.io/library/redis:latest                                                    4.7s
+ => [auth] library/redis:pull token for registry-1.docker.io                                                       0.0s
+ => [internal] load .dockerignore                                                                                  0.1s
+ => => transferring context: 2B                                                                                    0.0s
+ => [1/1] FROM docker.io/library/redis:latest@sha256:acb90ced0bd769b7c04cb4c32c4494ba7b3e0ee068bdbfff0eeb0d31c2a2  0.3s
+ => => resolve docker.io/library/redis:latest@sha256:acb90ced0bd769b7c04cb4c32c4494ba7b3e0ee068bdbfff0eeb0d31c2a2  0.0s
+ => exporting to image                                                                                             1.3s
+ => => exporting layers                                                                                            0.0s
+ => => exporting manifest sha256:f13b5452232de6a23af9612c5d7993aac0c2ea221df40d9b255b74b46cfd390f                  0.0s
+ => => exporting config sha256:20a8ad6bf21bd0d4c370be84a128b3419b752a962ef984e3b18bfa393588dc50                    0.0s
+ => => exporting attestation manifest sha256:f52553f1f444b4f46dd608297833b70e074bb41ac04b0fb0bc230ac27e7e71b4      0.1s
+ => => exporting manifest list sha256:0b7dadcd70d5109ec1b2a6b0969928d28f42041a0f95ce612125a42b30e719e8             0.0s
+ => => naming to docker.io/library/redisnew:latest                                                                 0.0s
+ => => unpacking to docker.io/library/redisnew:latest                                                              1.0s
+PS C:\Users\adlac\onedrive\desktop\deepak> docker run --name myredisnew -d redisnew
+10a1bf84ff4f5a3e550178853992eaf07848d4d5a17b826810246cc07abceca0
+PS C:\Users\adlac\onedrive\desktop\deepak> docker ps
+CONTAINER ID   IMAGE      COMMAND                  CREATED          STATUS          PORTS      NAMES
+10a1bf84ff4f   redisnew   "docker-entrypoint.s…"   14 seconds ago   Up 13 seconds   6379/tcp   myredisnew
+PS C:\Users\adlac\onedrive\desktop\deepak> docker stop myredisnew
+myredisnew
+PS C:\Users\adlac\onedrive\desktop\deepak> docker login
+Authenticating with existing credentials...
+Login Succeeded
+PS C:\Users\adlac\onedrive\desktop\deepak> docker ps -a
+CONTAINER ID   IMAGE      COMMAND                  CREATED          STATUS                      PORTS     NAMES
+10a1bf84ff4f   redisnew   "docker-entrypoint.s…"   49 seconds ago   Exited (0) 22 seconds ago             myredisnew
+PS C:\Users\adlac\onedrive\desktop\deepak> docker commit 0e993d2009a1 chakri7adla/redi
+Error response from daemon: No such container: 0e993d2009a1
+PS C:\Users\adlac\onedrive\desktop\deepak> docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+PS C:\Users\adlac\onedrive\desktop\deepak> docker commit 0e993d2009a1 chakri7adla/redi
+Error response from daemon: No such container: 0e993d2009a1
+PS C:\Users\adlac\onedrive\desktop\deepak> docker ps -a
+CONTAINER ID   IMAGE      COMMAND                  CREATED         STATUS                      PORTS     NAMES
+10a1bf84ff4f   redisnew   "docker-entrypoint.s…"   4 minutes ago   Exited (0) 36 seconds ago             myredisnew
+PS C:\Users\adlac\onedrive\desktop\deepak> docker commit 0e993d2009a1 chakri7adla/redi
+Error response from daemon: No such container: 0e993d2009a1
+PS C:\Users\adlac\onedrive\desktop\deepak> docker commit 10a1bf84ff4f chakri7adla/redi
+sha256:b7821f5b44a7e15d18f3aa6149823efad08268ded7c5cfd686455b855c8b43bd
+PS C:\Users\adlac\onedrive\desktop\deepak> docker rmi chakri7adla/redi
+Untagged: chakri7adla/redi:latest
+Deleted: sha256:b7821f5b44a7e15d18f3aa6149823efad08268ded7c5cfd686455b855c8b43bd
+PS C:\Users\adlac\onedrive\desktop\deepak> docker pull chakri7adla/redi
+Using default tag: latest
+Error response from daemon: failed to resolve reference "docker.io/chakri7adla/redi:latest": docker.io/chakri7adla/redi:latest: not found
+PS C:\Users\adlac\onedrive\desktop\deepak> docker exec -it myredis redis-cli
+Error response from daemon: No such container: myredis
+PS C:\Users\adlac\onedrive\desktop\deepak> docker exec -it myredisnew redis-cli
+Error response from daemon: container 10a1bf84ff4f5a3e550178853992eaf07848d4d5a17b826810246cc07abceca0 is not running
+PS C:\Users\adlac\onedrive\desktop\deepak> docker start myredisnew
+myredisnew
+PS C:\Users\adlac\onedrive\desktop\deepak> docker exec -it myredisnew redis-cli
+127.0.0.1:6379> SET name "Alice"
+OK
+127.0.0.1:6379> GET name
+"Alice"
+127.0.0.1:6379> exit
+PS C:\Users\adlac\onedrive\desktop\deepak> docker stop myredis
+Error response from daemon: No such container: myredis
+PS C:\Users\adlac\onedrive\desktop\deepak> docker stop myredisnew
+myredisnew
+PS C:\Users\adlac\onedrive\desktop\deepak> docker rm myredisnew
+myredisnew
+PS C:\Users\adlac\onedrive\desktop\deepak> docker rmi chakri7adla/redi
+Error response from daemon: No such image: chakri7adla/redi:latest
+PS C:\Users\adlac\onedrive\desktop\deepak> docker images
+REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+redisnew     latest    0b7dadcd70d5   4 weeks ago   200MB
+PS C:\Users\adlac\onedrive\desktop\deepak> docker rmi chakri7adla/redisnew
+Error response from daemon: No such image: chakri7adla/redisnew:latest
+PS C:\Users\adlac\onedrive\desktop\deepak> docker rmi redisnew
+Untagged: redisnew:latest
+Deleted: sha256:0b7dadcd70d5109ec1b2a6b0969928d28f42041a0f95ce612125a42b30e719e8
+PS C:\Users\adlac\onedrive\desktop\deepak> docker logout
+Removing login credentials for https://index.docker.io/v1/

@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+
+    tools {
+        maven 'MAVEN-HOME'
+        jdk 'JDK-17'
+    }
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/PKarthikyadav/frost.git'
+            }
+        }
+
+        stage('Clean') {
+            steps {
+                bat 'mvn clean'
+            }
+        }
+
+        stage('Install') {
+            steps {
+                bat 'mvn install -DskipTests'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                bat 'mvn test'
+            }
+        }
+    }
+}

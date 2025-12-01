@@ -1,0 +1,168 @@
+⭐ TASK: Run a Flask App + MySQL using Docker Compose
+
+Your final result will be:
+
+A Flask web app running at http://localhost:5000
+
+A MySQL database running inside another container
+
+Both containers managed by docker-compose
+
+⭐ Step 1: Create a project folder
+
+In PowerShell:
+
+mkdir custom_flask
+cd custom_flask
+
+
+Why?
+👉 To keep your app, Dockerfile, and docker-compose files together.
+
+⭐ Step 2: Create the Flask app file (app.py)
+
+Run:
+
+notepad app.py
+
+
+Paste this simple Flask app:
+
+from flask import Flask
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "Hello from 24BD5A0503 - NEKSHASRINIVAS"
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
+
+
+Why?
+👉 This is your actual web app that Docker will run.
+
+⭐ Step 3: Create the Dockerfile
+
+Create the file:
+
+notepad Dockerfile
+
+
+Paste this:
+
+FROM python:3.10-slim
+
+WORKDIR /app
+
+COPY app.py /app/
+
+RUN pip install flask
+
+CMD ["python", "app.py"]
+
+
+Why?
+
+FROM python:3.10-slim → uses a lightweight Python image
+
+WORKDIR /app → container will work in /app folder
+
+COPY app.py /app/ → copy your code into the container
+
+RUN pip install flask → install flask inside container
+
+CMD ["python", "app.py"] → Run the app when container starts
+
+⭐ Step 4: Create the docker-compose.yml
+
+Run:
+
+notepad docker-compose.yml
+
+
+Paste this:
+
+version: "3.9"
+
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mydb
+    ports:
+      - "3306:3306"
+
+✔ What this file does:
+
+web service → Flask
+
+build: . → Build Dockerfile in current folder
+
+ports: "5000:5000" → Expose web app to browser
+
+depends_on: db → Start DB container first
+
+db service → MySQL
+
+image: mysql:8.0 → Uses MySQL 8
+
+environment → Sets root password + DB name
+
+ports: "3306:3306" → Makes MySQL visible locally
+
+⭐ Step 5: Build and run the containers
+
+Run this inside your project folder:
+
+docker compose up --build
+
+
+OR (older versions):
+
+docker-compose up --build
+
+
+What happens:
+
+✔ Docker builds your Flask image using the Dockerfile
+✔ Docker pulls MySQL image
+✔ Docker creates 2 containers
+✔ Networks them together
+✔ Starts both
+
+You will see output showing installation and container creation.
+
+⭐ Step 6: Test the Flask app
+
+Open browser:
+
+http://localhost:5000
+
+
+You should see:
+
+Hello from 24BD5A0503 - NEKSHASRINIVAS
+
+
+🎉 Your Flask app is running inside Docker!
+
+⭐ Step 7: Stop the services
+
+To stop:
+
+docker compose down
+
+
+To remove everything including DB data:
+
+docker compose down -v

@@ -1,0 +1,27 @@
+# 1. Start Minikube
+minikube start
+
+# 2. Create nginx deployment
+kubectl create deployment mynginx --image=nginx
+
+# 3. Expose it as a NodePort service (container port 80)
+kubectl expose deployment mynginx --type=NodePort --port=80
+
+# 4. Check pods
+kubectl get pods
+
+# 5. Check service details (to see NodePort)
+kubectl get svc mynginx -o wide
+
+# 6. Find ONLY the NodePort assigned (example output: 30080 or 31234)
+kubectl get svc mynginx -o=jsonpath="{.spec.ports[0].nodePort}"; echo
+
+# 7. Get Minikube IP
+minikube ip
+
+# 8. Combine Minikube_IP + NodePort in browser:
+#    http://<minikube-ip>:<node-port>
+# Example: http://192.168.49.2:30080
+
+# 9. OPTIONAL: Minikube helper to print full working URL automatically
+minikube service mynginx --url

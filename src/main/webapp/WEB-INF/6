@@ -1,0 +1,216 @@
+LAB ACTION PLAN FOR WEEK 6
+
+1. Understand Docker Compose as a tool for multi-container apps.
+
+2. Learn Docker Compose file structure (version, services, networks, volumes).
+
+3. Save Compose file as:
+docker-compose.yml
+Or
+docker-compose.yaml
+
+4. Run multiple services example (nginx + tomee):
+version: "3.8"
+services:
+  web:
+    image: nginx
+    ports:
+      - "8060:80"
+  db:
+    image: tomee
+    ports:
+      - "8050:8080"
+
+5. Run Wordpress + MySQL using compose YAML.
+
+6. To start containers in background mode:
+docker-compose up -d
+
+7. To stop all containers:
+docker-compose down
+
+8. To scale a service to 2 containers:
+docker-compose up --scale <service-name>=2 -d
+Example:
+docker-compose up --scale web=2 -d
+
+9. If port conflict occurs while scaling (8080:80 already used), define separate services with different ports:
+version: "3.9"
+networks:
+  app-net:
+volumes:
+  db-data:
+services:
+  web1:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+  web2:
+    image: nginx:alpine
+    ports:
+      - "8081:80"
+Run:
+docker-compose up -d
+
+10. Create new folder for lab:
+compose-lab
+
+11. Create docker-compose.yml inside it with:
+version: "3.9"
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: demo
+      POSTGRES_PASSWORD: demo
+      POSTGRES_DB: demo_db
+
+12. Run the setup:
+docker compose up -d
+
+13. Visit in browser:
+localhost:8080
+
+14. Modify docker-compose.yml to add Redis:
+services:
+  redis:
+    image: redis:alpine
+
+15. Add dependency so web waits for Redis:
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    depends_on:
+      - redis
+
+16. Restart services:
+docker compose up -d
+docker compose ps
+
+17. Zip folder for deployment:
+compose-lab.zip
+
+18. Transfer zip to another machine and run:
+docker compose up -d
+
+19. Add custom network & persistent volume to compose file:
+networks:
+  app-net:
+volumes:
+  db-data:
+
+20. Assign network and volume to services:
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    networks:
+      - app-net
+    depends_on:
+      - db
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: demo
+      POSTGRES_PASSWORD: demo
+      POSTGRES_DB: demo_db
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - app-net
+
+21. Run:
+docker compose up -d
+
+22. Open Postgres CLI inside running container:
+docker exec -it compose-lab-db-1 psql -U demo -d demo_db
+
+23. Inside psql run:
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(50),
+    email VARCHAR(100)
+);
+INSERT INTO users (name, email) VALUES
+    ('Alice', 'alice@example.com'),
+    ('Bob', 'bob@example.com');
+SELECT * FROM users;
+
+24. Exit CLI:
+exit
+
+25. Stop services:
+docker compose down
+
+26. Start again to verify persistence:
+docker compose up -d
+
+27. Create Flask app (app.py):
+from flask import Flask
+app = Flask(__name__)
+@app.route("/")
+def home():
+    return "Hello from Flask + Docker!"
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
+
+28. Create Dockerfile with:
+FROM python:3.10-slim
+WORKDIR /app
+COPY app.py /app/
+RUN pip install flask
+CMD ["python", "app.py"]
+
+29. Update compose file to build Flask app:
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+
+30. Run with rebuild:
+docker compose up --build
+
+31. Visit:
+localhost:5000
+
+32. Edit text in app.py for testing iteration.
+
+33. Delete unmerged branch in Git:
+git branch -D <branch_name>
+
+34. Ignore logs in Git using:
+(Add in .gitignore manually)
+
+35. Check which container is using port 3000:
+docker ps
+docker ps -a
+docker images
+docker stop <container>
+docker rm <container_id>
+docker rmi <image_name>
+docker logout
+docker fetch --prune
+git branch -a
+git branch -r
+git branch --merged | grep <branch>
+git stash
+git stash apply
+git stash pop
+git diff
+git status
+git commit --amend -m "<message>"
+git reflog
+git checkout -b <branch> <commit_hash>
+
+Conclusion: Completed Docker Compose execution.
+

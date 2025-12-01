@@ -1,0 +1,112 @@
+LAB ACTION PLAN FOR WEEK 5
+
+Docker:
+
+Working with Docker CLI Commands:
+
+Docker CLI Commands with redis
+
+Step 1: Pull the redis Image
+docker pull redis
+
+Step 2: Run a Redis Container
+docker run --name my-redis -d redis
+
+Step 3: Check Running Containers
+docker ps
+
+Step 4: Access Redis and open CLI inside container
+docker exec -it my-redis redis-cli
+SET name "Alice"
+GET name
+
+Step 5: Stop the Redis Container
+docker stop my-redis
+
+Step 6: Restart the Redis Container
+docker start my-redis
+
+Step 7: Remove the Redis Container permanently
+docker rm my-redis
+
+Step 8: Remove the Redis Image from local system
+docker rmi redis
+
+2. Working with Docker file
+
+Step 1: Set Up Your Folder (Windows)
+cd /c/DockerProjects/Redis
+git init
+
+Docker Commands (Step-by-step):
+
+1. Build a new Docker image using Dockerfile in current folder and tag it
+docker build -t redisnew  .
+
+2. Run container from redisnew image in background and name it
+docker run --name myredisnew -d redisnew
+
+3. List running containers
+docker ps
+
+4. Stop the container by name
+docker stop myredisnew
+
+5. Login to Docker Hub account
+docker login
+
+6. List all containers including stopped ones
+docker ps -a
+
+7. Create a new Docker image snapshot from container ID
+docker commit 0e993d2009a1 budarajumadhurika/redis1
+
+8. List all local Docker images
+docker images
+
+9. Push the image to Docker Hub repository
+docker push budarajumadhurika/redis1
+
+10. Remove container using ID
+docker rm 0e993d2009a1
+
+11. Remove Docker image from local system
+docker rmi budarajumadhurika/redis1
+
+12. Show all containers to confirm changes
+docker ps -a
+
+13. Logout of Docker Hub
+docker logout
+
+14. Pull the image back from Docker Hub
+docker pull budarajumadhurika/redis1
+
+15. Run a new container from pulled image and name it
+docker run --name myredis -d budarajumadhurika/redis1
+
+16. Open Redis CLI inside running container
+docker exec -it myredis redis-cli
+SET name "Abcdef"
+GET name
+
+19. Exit Redis CLI
+exit
+
+20. List all containers and check status
+docker ps -a
+
+21. Stop the container by name
+docker docker stop myredis
+
+22. Remove container using ID
+docker rm 50a6e4a9c326
+
+23. List Docker images
+docker images
+
+24. Remove redis image from local again
+docker rmi budarajumadhurika/redis1
+
+Step 3: Remove login credentials (optional)
+docker logout

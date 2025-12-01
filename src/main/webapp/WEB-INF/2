@@ -1,0 +1,129 @@
+1. Discard unstaged local changes:
+git restore <file>
+
+2. Remove from staging without losing changes:
+git restore --staged <file>
+
+3. Fix wrong commit message (not pushed):
+git commit --amend -m "Correct commit message"
+
+4. View commit history (readable):
+git log --oneline --graph --decorate
+
+5. Set global name & email:
+git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
+
+6. View unstaged edits:
+git diff
+
+7. Switch to branch:
+git switch feature/login
+
+8. Restore deleted branch (not pushed delete):
+git reflog
+git branch feature-ui <commit_hash>
+
+9. Upload local commits:
+git push
+
+10. Fetch without merge:
+git fetch
+
+11. Create & switch new branch:
+git switch -c search-filter
+
+12. Remove committed API-key file from history:
+git filter-branch --force --index-filter "git rm --cached --ignore-unmatch <file>" --prune-empty --tag-name-filter cat -- --all
+
+13. List local + remote branches:
+git branch -a
+
+14. Merge feature/signup into main:
+git switch main
+git merge feature/signup
+
+15. Resolve merge conflict:
+git add app.js
+git commit
+
+16. Ignore .log / node_modules:
+(Add them to .gitignore file manually)
+
+17. Who last changed line 25:
+git blame -L 25,25 script.py
+
+18. Save work before switching:
+git stash
+
+19. Restore stash:
+git stash pop
+
+20. Delete branch locally:
+git branch -d feature/test
+
+21. Delete merged branch safely:
+git switch main
+git branch -d feature-ui
+
+22. Force delete unmerged branch:
+git branch -D feature-experiment
+
+23. Delete feature-ui while on feature-login (ensure you're not on that branch):
+git switch feature-login
+git branch -d feature-ui
+
+24. Check if branch is merged before deletions:
+git branch --merged | grep bugfix-footer
+
+25. Delete multiple merged branches in one command:
+git branch -d feature-a feature-b feature-c
+
+26. Clone a remote repo:
+git clone <repository_url>
+
+27. See connected remotes:
+git remote -v
+
+28. Add new remote:
+git remote add <remote_name> <repository_url>
+
+29. Remove remote:
+git remote remove <remote_name>
+
+30. Rename a remote:
+git remote rename <old_name> <new_name>
+
+31. Fetch updates from remote only:
+git fetch <remote_name>
+
+32. Pull and merge latest changes:
+git pull <remote_name> <branch_name>
+
+33. Push local commits:
+git push <remote_name> <branch_name>
+
+34. Push first time and set upstream:
+git push -u <remote_name> <branch_name>
+
+35. Change remote URL:
+git remote set-url <remote_name> <new_repository_url>
+
+36. List all remote branches:
+git ls-remote --heads <remote_name>
+
+37. Remove deleted remote branches from local view:
+git fetch --prune
+
+38. Fetch specific branch from remote:
+git fetch <remote_name> <branch_name>
+
+39. Fetch specific branch and store as local branch:
+git fetch <remote_name> <branch_name>:<local_branch_name>
+
+40. Show detailed remote info:
+git remote show <remote_name>
+
+41. Rebase local branch onto remote branch:
+git rebase <remote_name>/<branch_name>
+ 

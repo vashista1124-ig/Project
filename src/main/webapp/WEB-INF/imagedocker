@@ -1,0 +1,20 @@
+create docker in one powershell
+
+first with commit:
+
+docker commit cont_name img_name 
+docker run -it img_name(if git not there apt install git -y and exit)
+docker tag img_name dockerusername/img_name
+docker push dockerusername/img_name
+
+with file:
+mkdir image-creation
+cd image-creation
+notepad Dockerfile
+ren Dockerfile.txt Dockerfile 
+in file write : FROM ubuntu:latest 
+                CMD["bash]
+docker build -t img-docker .
+docker run -it img_name(if git not there apt install git -y and exit)
+docker tag img_name dockerusername/img_name
+docker push dockerusername/img_name

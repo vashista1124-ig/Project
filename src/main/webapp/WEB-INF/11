@@ -1,0 +1,165 @@
+LAB ACTION PLAN FOR WEEK 10
+
+Working with Minikube and Nagios
+
+1. Hands-on practice of creating, running and scaling pods in Minikube.
+
+2. Running Nginx server on specified port number by explaining the Nginx monitoring tool.
+
+3. Running Nagios server and Understanding the Monitoring tool using Docker.
+
+4. AWS-free Trier account Creation steps.
+
+5. Upload the screenshots for the tasks.
+
+----------------------------------------------
+
+Kubernetes + Minikube Setup
+
+Step 1: Install Prerequisites
+
+1. Verify virtualization is enabled.
+
+2. Install one hypervisor driver:
+   minikube start --driver=hyperv
+   Or
+   minikube start --driver=docker
+
+Step 2: Download Minikube
+
+1. Open PowerShell or CMD as Administrator.
+
+2. Download installer:
+   curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-installer.exe
+
+3. Run installer:
+   .\minikube-installer.exe
+
+Step 3: Add Minikube to PATH (if not added)
+
+1. Open:
+   System Properties → Environment Variables
+
+2. Add installation path to PATH:
+   C:\Program Files\Minikube
+
+Step 4: Start Minikube
+
+1. Open terminal.
+
+2. Start cluster:
+   minikube start
+
+3. Verify status:
+   minikube status
+
+Step 5: Interact with Cluster
+
+1. Run:
+   minikube kubectl -- get pods -A
+   Or
+   download kubectl separately
+
+2. Open dashboard:
+   minikube dashboard
+
+Optional: Check installation
+
+1. Check Minikube version:
+   minikube version
+
+2. Check kubectl client version:
+   kubectl version --client
+
+Troubleshooting
+
+1. If cluster fails to start, check logs:
+   minikube logs
+
+2. Update Minikube:
+3. Check update:
+   minikube update-check
+
+4. Update:
+   minikube update
+
+----------------------------------------------
+
+Minikube Automation Steps
+
+Step 1: Start Minikube Cluster
+minikube start
+
+Step 2: Create and Manage Deployment
+
+1. Create nginx deployment:
+   kubectl create deployment mynginx --image=nginx
+   If already created then update image:
+   kubectl set image deployment/myngnix nginx=nginx:latest
+
+2. Verify deployment:
+   kubectl get deployments
+   Check:
+   kubectl get pods
+   kubectl describe pods
+
+Step 3: Scale Deployment
+
+1. Scale to 4 replicas:
+   kubectl scale deployment mynginx --replicas=4
+   kubectl get service myngnix
+
+Step 4: Access the App
+
+1. Forward port:
+   kubectl port-forward svc/mynginx 8081:80
+   Visit:
+   localhost:8081
+
+2. If error, start tunnel:
+   minikube tunnel
+   Get service URL:
+   minikube service mynginx --url
+   Open URL in browser.
+
+Step 5: Stop and Clean Up
+
+1. Delete deployment:
+   kubectl delete deployment mynginx
+   kubectl delete service mynginx
+
+2. Stop cluster:
+   minikube stop
+
+3. Delete cluster:
+   minikube delete
+
+----------------------------------------------
+
+Nagios Automation Steps (Docker)
+
+Step 1: Pull image
+docker pull jasonrivers/nagios:latest
+
+Step 2: Run container
+docker run --name nagiosdemo -p 8888:80 jasonrivers/nagios:latest
+
+Step 3: Access dashboard
+Open browser:
+localhost:8888
+Login:
+Username: nagiosadmin
+Password: nagios
+
+Step 4: Stop and Remove Nagios
+
+1. Stop container:
+   docker stop nagiosdemo
+
+2. Remove container:
+   docker rm nagiosdemo
+
+3. Remove image (optional)
+   docker images
+   docker rmi jasonrivers/nagios:latest
+

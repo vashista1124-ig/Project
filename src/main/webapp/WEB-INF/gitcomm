@@ -1,0 +1,38 @@
+1.rejected non fast forward :
+  git pull --rebase origin <branch-name>
+
+2.to add feature without disturbing main:
+  git push origin feature/feat-1
+
+3.how to update changes from remote:
+  git fetch origin
+  git checkout<branch-name>
+4.to take friend changes in main and apply our changes:
+  git stash
+  git pull --rebase origin main
+  git stash pop
+5.if we sent sensitive information to git we should remove it:
+  git rm --cached path/to/file
+  git commit -m "success"
+  git push origin main
+ 
+  if exists in history:
+  git filter-branch --force --index-filter/
+  "git rm --cached --ignore-unmatch path/to/file"/
+  --prune-empty --tag-name-filter cat -- --all
+6.to take changes from main to our feature-branch:
+  git checkout feature/feature-name
+  git fetch origin
+  git rebase origin/main
+
+ 9.git pull origin branch-name
+   Git will highlight conflicts. Open the files, manually resolve the <<<<<<<, =======,
+   and >>>>>>> markers.
+   Mark as resolved and commit:
+   git add .
+   git commit
+ 10. You’ve pushed a feature branch to a remote repository, but now you need to delete         
+     branch from the remote. How would you do that?
+     Use the following command:
+     git push origin--delete feature/branch-name
+     This will remove the branch from the remote repository

@@ -1,0 +1,123 @@
+# Check git installed version
+git --version
+git version
+
+# Configure user globally
+git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
+
+# List all git configurations
+git config --list
+git config --list
+git config --list
+
+# Initialize git repository
+cd /path/to/your/project
+git init
+
+# Add remote repository
+git remote -v
+git remote add origin https://github.com/yourusername/your-private-repo.git
+
+# Stage all files
+git add .
+
+# Commit staged files
+git commit -m "Initial commit"
+
+# Correct last commit message
+git commit --amend -m "Corrected commit message"
+
+# Push changes first time (set upstream)
+git push -u origin master
+git push -u origin main
+git push --set-upstream origin feature-branch
+
+# Upload commits to remote
+git push
+git push origin main
+
+# Download latest changes without merging
+git fetch
+git fetch origin
+git fetch <remote_name> <branch_name>
+git fetch origin feature-branch
+git fetch <remote_name> <branch_name>:<local_branch_name>
+
+# Pull and merge updates
+git pull <remote_name> <branch_name>
+git pull origin main
+
+# Remove remote repo
+git remote remove origin
+git remote remove <remote_name>
+
+# Rename remote
+git remote rename origin upstream
+git remote rename <old_name> <new_name>
+git remote rename <old_name> <new_name>
+
+# Update remote URL
+git remote set-url origin https://github.com/username/new-repository.git
+git remote set-url <remote_name> <new_url>
+
+# Show remote details
+git remote show origin
+git remote show <remote_name>
+
+# Remove stale deleted remote branches
+git fetch --prune
+git remote prune origin
+
+# View working directory status
+git status
+
+# View changes not staged
+git diff
+git restore <file>
+git restore filename
+
+# Remove file from staging only
+git restore --staged <file>
+git reset <file>
+
+# Undo commit but keep history
+git revert <commit_hash>
+
+# View commit history
+git log
+git log --oneline
+git show <commit_hash>
+
+# See who changed a specific line
+git blame -L 25,25 script.py
+git blame script.py
+
+# Stash uncommitted work
+git stash
+git stash apply
+git stash pop
+git switch another-branch
+
+# Branch operations
+git branch -a
+git branch -r
+git branch --merged
+git branch --merged | grep bugfix-footer
+git branch -d feature/test
+git branch -d feature-ui
+git branch -d feature/test
+git branch -D feature-experiment
+git branch -d feature-a feature-b feature-c
+git branch -d feature-a feature-b feature-c
+git branch -D feature-experiment
+git branch -d bugfix-footer
+git branch -d <branch_name>
+git branch -D <branch_name>
+git branch -d feature-ui
+
+# Switch branch
+git checkout branch-name
+git checkout -b new-branch
+git switch feature/login
+git switch main
