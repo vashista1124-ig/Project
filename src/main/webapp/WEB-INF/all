@@ -1,0 +1,124 @@
+Maven
+————-
+Archetypes for maven_java
+Maven-archetype-quickstart-1.5
+Archetype for maven_webapp
+Maven-archetype-webapp-1.5 
+
+
+Docker cli
+———————
+parshurampathak@Parshurams-MacBook-Air ~ % cd /Users/parshurampathak/Downloads/docker
+docker pull redis
+docker run --name my-redis -d redis
+ docker ps
+docker exec -it my-redis redis-cli
+127.0.0.1:6379> GET name
+(nil)
+127.0.0.1:6379> SET name "Ram"
+OK
+127.0.0.1:6379> GET name
+"Ram"
+127.0.0.1:6379> exit
+docker stop my-redis
+docker start my-redis
+ docker rmi redis --force
+docker rm my-redis --force
+
+Docker compose
+————————————
+docker compose config      # or: docker-compose config
+docker compose up -d        # or: docker-compose up -d
+docker compose down          # or: docker-compose down
+docker compose up --scale wordpress=2 -d
+services:
+  wordpress:
+    image: wordpress:latest
+    ports:
+      - "8080:80"
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+    depends_on:
+      - db
+
+  db:
+    image: mariadb:10.5
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+
+
+
+Pipeline script
+——————————
+pipeline {
+    agent any
+
+    tools {
+        maven 'MAVEN-HOME'
+        jdk 'JDK-17'
+    }
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/PKarthikyadav/frost.git'
+            }
+        }
+
+        stage('Clean') {
+            steps {
+                bat 'mvn clean'
+            }
+        }
+
+        stage('Install') {
+            steps {
+                bat 'mvn install -DskipTests'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                bat 'mvn test'
+            }
+        }
+    }
+}
+
+Kubernets
+——————
+minikube start --driver=docker
+kubectl create deployment nginx --image=nginx:alpine
+kubectl expose deployment nginx --type=NodePort --port=80
+minikube service nginx --url
+
+Nagios
+————————
+docker pull jasonrivers/nagios:latest
+docker run --name nagiosdemo -p 8888:80 jasonrivers/nagios:latest
+
+AWS
+————-
+sudo apt update
+sudo apt-get install docker.io
+sudo apt install git
+sudo apt install nano
+Create a git repo
+git clone “repo”
+ls for the repo
+cd repo
+ls for index.html file
+nano Dockerfile
+In docker file code should be
+     FROM nginx:alpine
+     COPY .  /usr/share/nginx/html
+
+sudo docker build -t mywebapp
+sudo docker run -d -p 80:80 mywebapp
