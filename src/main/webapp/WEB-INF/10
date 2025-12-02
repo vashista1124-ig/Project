@@ -82,7 +82,11 @@ Troubleshooting
 
 4. Update:
    minikube update
-
+kubectl create deployment mysql --image=mysql:8
+kubectl set env deployment/mysql MYSQL_ROOT_PASSWORD=root
+kubectl expose deployment mysql --port=3306
+kubectl get pods
+kubectl exec -it <pod-name> -- mysql -u root -proot
 ----------------------------------------------
 
 Minikube Automation Steps
