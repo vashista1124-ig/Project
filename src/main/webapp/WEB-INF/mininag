@@ -1,0 +1,110 @@
+========================================
+     MINIKUBE & NAGIOS AUTOMATION STEPS
+========================================
+
+
+===========================
+  PART 1 — MINIKUBE SETUP
+===========================
+
+Step 1: Start Minikube
+----------------------
+minikube start                      # start Kubernetes cluster
+minikube status                     # check if running
+minikube version                    # verify installation
+kubectl version --client           # check kubectl version
+
+
+Step 2: Interact with Minikube
+------------------------------
+minikube kubectl -- get pods -A     # list all pods
+minikube dashboard                  # open Kubernetes dashboard
+
+
+===========================================
+  PART 2 — DEPLOY NGINX ON KUBERNETES
+===========================================
+
+Step 3: Create Deployment
+-------------------------
+kubectl create deployment mynginx --image=nginx   # create nginx app
+kubectl get deployments                           # view deployments
+kubectl get pods                                  # view pods
+kubectl describe pods                             # detailed pod info
+
+If deployment already exists:
+kubectl set image deployment/mynginx nginx=nginx:latest  
+                                                  # update nginx image
+
+
+Step 4: Expose Deployment
+-------------------------
+kubectl expose deployment mynginx --type=NodePort --port=80 --target-port=80
+                                                  # expose nginx service
+
+
+Step 5: Scale Deployment
+------------------------
+kubectl scale deployment mynginx --replicas=4     # scale to 4 pods
+kubectl get service mynginx                       # view service
+
+
+Step 6: Access Nginx App
+------------------------
+Option 1 — Port Forward:
+kubectl port-forward svc/mynginx 8081:80          # open at http://localhost:8081
+
+Option 2 — Minikube Tunnel:
+minikube tunnel                                   # open network tunnel
+minikube service mynginx --url                    # get external URL
+
+Open Dashboard:
+minikube dashboard                                # UI panel for Kubernetes
+
+
+=============================
+  PART 3 — CLEANUP MINIKUBE
+=============================
+
+kubectl delete deployment mynginx                 # remove deployment
+kubectl delete service mynginx                    # remove service
+minikube stop                                     # stop cluster
+minikube delete                                   # delete cluster completely
+
+
+===========================
+   PART 4 — NAGIOS SETUP
+===========================
+
+Step 1: Pull Nagios Image
+-------------------------
+docker pull jasonrivers/nagios:latest             # download image
+
+
+Step 2: Run Nagios
+------------------
+docker run --name nagiosdemo -p 8888:80 jasonrivers/nagios:latest 
+                                                  # run on port 8888
+
+
+Step 3: Access Nagios Dashboard
+-------------------------------
+Open in browser:
+http://localhost:8888
+
+Login details:
+Username: nagiosadmin
+Password: nagios
+
+
+Step 4: Stop and Remove Nagios
+------------------------------
+docker stop nagiosdemo                            # stop container
+docker rm nagiosdemo                              # remove container
+docker images                                     # list images
+docker rmi jasonrivers/nagios:latest              # delete image
+
+
+===========================
+  END OF AUTOMATION GUIDE
+===========================
